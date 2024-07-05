@@ -1,0 +1,285 @@
+/* Body styles */
+body {
+    font-family: 'Assistant', sans-serif;
+    background-image: url(Background.png) ;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden;
+    
+}
+
+/* Header styles */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 60px;
+    height: 100vh;
+    background-color: #333;
+    z-index: 1000;
+    transition: width 0.3s ease;
+}
+
+header.expanded {
+    width: 200px;
+}
+
+.menu-icon {
+    display: block;
+    width: 30px;
+    height: 30px;
+    margin: 15px auto;
+    cursor: pointer;
+}
+
+.menu-icon span {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: #fff;
+    margin-bottom: 5px;
+}
+
+nav ul {
+    display: none;
+    flex-direction: column;
+    padding-top: 20px;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul.show {
+    display: flex;
+}
+
+nav ul li {
+    margin: 10px 0;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 10px;
+    display: block;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+nav ul li a:hover {
+    background-color: #444;
+}
+
+/* Main container styles */
+main {
+    margin-left: 60px;
+    width: calc(100% - 60px);
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* DJ mixing zone styles */
+#mixing-area {
+    max-width: 800px;
+    max-height: 550px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -100px;
+    padding: 20px;
+    background: linear-gradient(45deg, #1a1a1a, #2c2c2c);
+    border: 2px solid #444;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Turntable styles */
+.turntable {
+    width: 100%;
+    height: 150px;
+    background: radial-gradient(circle, #333, #222);
+    border: 5px solid #444;
+    border-radius: 10px;
+    position: relative;
+    margin: 10px 0;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.turntable::before,
+.turntable::after {
+    content: '';
+    width: 100px;
+    height: 100px;
+    background: #2c2c2c;
+    border-radius: 50%;
+    border: 5px solid #666;
+}
+
+.turntable .knob {
+    width: 50px;
+    height: 50px;
+    background: #666;
+    border-radius: 50%;
+}
+
+/* Genre list styles */
+#genres {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    max-height: 200px;
+    overflow-y: auto;
+    width: 100%;
+}
+
+.genre {
+    font-size: 0.9em;
+    padding: 8px 16px;
+    margin: 5px;
+    background: linear-gradient(45deg, #ff4081, #3f51b5);
+    border-radius: 50px;
+    cursor: move;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.genre:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 8px rgba(0,0,0,0.2);
+}
+
+#drop-zone {
+    min-height: 100px;
+    width: 80%;
+    padding: 10px;
+    background: rgba(255,255,255,0.1);
+    border: 2px dashed #666;
+    border-radius: 10px;
+    margin: 20px 0;
+    position: relative;
+}
+
+#drop-zone .placeholder-text {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #999;
+}
+
+#drop-zone.dragover {
+    border-color: #4CAF50;
+}
+
+#drop-zone.used .placeholder-text {
+    opacity: 0;
+}
+
+/* Result display styles */
+#result {
+    text-align: center;
+    font-size: 1.2em;
+    margin-top: 20px;
+    padding: 10px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 10px;
+    font-weight: bold;
+    width: 100%;
+}
+
+/* Reset button styles */
+#reset-button {
+    display: none;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: linear-gradient(45deg, #ff4081, #3f51b5);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+#reset-button:hover {
+    background: linear-gradient(45deg, #80334d, #3f51b5);
+}
+
+/* Scrollbar styles */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    header {
+        width: 100%;
+        height: auto;
+    }
+
+    .menu-icon {
+        display: none;
+    }
+
+    nav ul {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        padding: 10px 0;
+    }
+
+    main {
+        margin-left: 0;
+        width: 100%;
+        padding-top: 60px;
+    }
+}
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: 30px;
+    margin-bottom: -100px;
+    width: 10%;
+  }
+  footer {
+    background-color: #ff4081;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 62px;
+    padding: 10px 0; /* Optional: Adjust the padding to your preference */
+}
+
+#footer-text {
+    margin: 0;
+    text-align: center;
+}
