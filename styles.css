@@ -35,8 +35,12 @@ header.expanded {
     height: 30px;
     margin: 15px auto;
     cursor: pointer;
+    transition: width 1s height 1s ease;
 }
-
+.menu-icon:hover {
+    width: 31px;
+    height: 31px;
+}
 .menu-icon span {
     display: block;
     width: 100%;
@@ -124,9 +128,19 @@ main {
     content: '';
     width: 100px;
     height: 100px;
-    background: #2c2c2c;
+    background-image: url(Asset\ 6.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
     border-radius: 50%;
-    border: 5px solid #666;
+    transition: transform 1s ease;
+    
+}
+
+.turntable:hover::after {
+    transform: skew(-0.06turn, 18deg);
+}
+.turntable:hover::before {
+    transform: skew(0turn, 10deg);
 }
 
 .turntable .knob {
@@ -134,6 +148,13 @@ main {
     height: 50px;
     background: #666;
     border-radius: 50%;
+    background-image: url(Asset\ 7.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    transition: transform 1s ease;
+}
+.turntable:hover .knob {
+    transform: skew(-0.06turn, 18deg);
 }
 
 /* Genre list styles */
@@ -227,15 +248,16 @@ main {
 }
 
 ::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: #3f51b5;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #888;
+    background-color: #ff4081;
+    transition: background-color 10s ease-in-out;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #555;
+    background-color: #80334d;
 }
 
 /* Responsive design */
@@ -268,6 +290,11 @@ main {
     margin-right: 30px;
     margin-bottom: -100px;
     width: 10%;
+    transition: width 2s, height 2s;
+  }
+  .center:hover {
+    width: 11%;
+    height: 11%
   }
   footer {
     background-color: #ff4081;
@@ -275,11 +302,141 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 96px;
+    margin-top: 697px;
+    position: absolute;
     padding: 10px 0; /* Optional: Adjust the padding to your preference */
 }
 
 #footer-text {
     margin: 0;
     text-align: center;
+}
+
+.gallery-container {
+    max-width: 800px;
+    margin: 20px auto;
+    overflow: hidden;
+    position: relative;
+    max-height: 300px;
+}
+
+.gallery-slider {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+.gallery-slide {
+    min-width: 100%;
+    max-width: 300px;
+    max-height:500px;
+    flex: 0 0 auto;
+    transition: 0.5s;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.genre-info {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.gallery-prev,
+.gallery-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 64, 129, 0.7);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 20px;
+    transition: background 0.3s ease;
+}
+
+.gallery-prev:hover,
+.gallery-next:hover {
+    background: rgba(255, 64, 129, 1);
+}
+
+.gallery-prev {
+    left: 10px;
+}
+
+.gallery-next {
+    right: 10px;
+}
+.artist-info {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto;
+    gap: 15px;
+    align-items: start;
+    padding: 15px;
+}
+
+.artist-info img {
+    grid-column: 1 / 2;
+    grid-row: 1 / 3;
+    max-width: 300px;
+    max-height: 220px; /* הגבלת גובה */
+    object-fit: cover; /* שומר על יחס התמונה */
+    border-radius: 10px;
+}
+
+.artist-details {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    max-height: 200px; /* הגבלת גובה */
+    max-width: 300px;
+    overflow-y: auto; /* אפשרות לגלילה אם יש יותר מדי טקסט */
+}
+
+.artist-details h2 {
+    margin: 0;
+    color: #ff4081;
+    font-size: 1.4em;
+    margin-bottom: 10px;
+    
+}
+
+.artist-details p {
+    font-size: 0.95em;
+    line-height: 1.4;
+    
+}
+
+.music-player {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    width: 300px;
+    
+}
+
+@media (max-width: 600px) {
+    .artist-info {
+        grid-template-columns: 1fr;
+    }
+    
+    .artist-info img {
+        grid-column: 1;
+        grid-row: 1;
+        max-width: 100%;
+    }
+    
+    .artist-details {
+        grid-column: 1;
+        grid-row: 2;
+    }
+    
+    .music-player {
+        grid-column: 1;
+        grid-row: 3;
+    }
 }
