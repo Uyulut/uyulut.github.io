@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const genreList = document.getElementById('genres');
     const resetButton = document.getElementById('reset-button');
 
+   
     const genreCombinations = {
         'Pop + Electronic': 'Electropop',
         'Pop + R&B': 'Contemporary R&B',
@@ -24,6 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
         'Funk + Rock n Roll': 'Funk Rock',
         'Funk + Jazz': 'Jazz Funk',
         'Funk + Soul': 'Swamp Rock',
+        'Soul + Rock n Roll': 'Soul Rock',
+        'Soul Rock + Electronic': 'Electronic Soul Rock',
         'Funk + Hip Hop': 'Electro Music',
         'Electro Music + House': 'Electro House',
         'Electronic + Funk': 'Electro Music',
@@ -35,10 +38,14 @@ document.addEventListener('DOMContentLoaded', () => {
         'Electronic + Punk Rock': 'Electro Punk',
         'Electro Music + Punk Rock': 'Electro Punk',
         'Easy Listening + Electronic': 'Ambient',
+        'Ambient + Electronic': 'New Age',
+        'Ambient + New Age': 'Space Music',
+        'Ambient + Easy Listening': 'Space Music',
         'Ambient + Progressive Rock': 'Post Progressive',
         'House + Electro Music': 'Techno',
         'House + Electronic': 'Techno',
         'House + Synth Pop': 'Techno',
+        'Electro Music + Synth Pop': 'Space Disco',
         'Electro Music + Country': 'Electro Country',
         'Fusion Jazz + Soul': 'Acid Jazz',
         'Fusion Jazz + Disco': 'Acid Jazz',
@@ -68,7 +75,6 @@ document.addEventListener('DOMContentLoaded', () => {
         'Electronic Dance Music + Disco': 'House',
         'Electronic Dance Music + Funk': 'House',
         'House + Techno': 'Trance',
-        'Blues + Jazz': 'Swing',
         'Classical + Jazz': 'Orchestral Jazz',
         'Blues + Hip Hop': 'Hip Hop Blues',
         'Classical + Rock n Roll': 'Symphonic Rock',
@@ -89,8 +95,9 @@ document.addEventListener('DOMContentLoaded', () => {
         'R&B + Rock n Roll': 'Beat Music',
         'Beat Music + Rock n Roll': 'Garage',
         'Beat Music+ Pop': 'Bubblegum Pop',
-        'Bubblegum Pop + Dance': "Dance Pop",
+        'Bubblegum Pop + Dance': 'Dance Pop',
         'Electronic + New Wave': 'Synth Pop',
+        'Soul + Jazz': 'Afrobeat',
         'Disco + Synth Pop': 'House Pop',
         'Pop + Dance Pop': 'Teen Pop',
         'Pop Rock + Rock n Roll': 'Soft Rock',
@@ -169,6 +176,8 @@ document.addEventListener('DOMContentLoaded', () => {
         'Easy Listening + Hip Hop': 'Soft Rap',
         'Easy Listening + Rock n Roll': 'Soft Rock',
         'Easy Listening + Pop': 'Soft Pop',
+        'Western Swing + Rock n Roll': 'Rockabilly',
+        'Rockabilly + Rock n Roll': 'Surf Music',
         'Punk Rock + Ska': 'Ska Punk'
     };
 
