@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'Pop + Reggae': 'Reggae Fusion',
         'Pop + Country': 'Country Pop',
         'Pop + Folk': 'Folk Pop',
+        'Folk + Punk Rock': 'Folk Punk',
         'Pop + Classical': 'Orchestral Pop',
         'Pop + Proto Punk': 'Pop Punk',
         'Blues + Proto Punk': 'Punk Blues',
@@ -48,6 +49,9 @@ document.addEventListener('DOMContentLoaded', () => {
         'Pop + Disco': 'Dance Pop',
         'Progressive + Rock n Roll': 'Progressive Rock',
         'Pop + Indie': 'Indie Pop',
+        'Indie + Alternative Rock': 'Indie Rock',
+        'Indie Rock + Pop': 'Indie Pop',
+        'Disco + Classical': 'Symphonic Disco',
         'Indie Pop + Pop': 'Twee Pop',
         'Electronic + Classical': 'Orchestral Electronic',
         'Pop + Alternative Rock': 'Alternative Pop',
@@ -115,6 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'Easy Listening + Jazz': 'Chill Out',
         'Psychedelic Music + Jazz': 'Acid Jazz',
         'Heavy Metal + Alternative Rock': 'Alternative Metal',
+        'Alternative Metal + Grunge': 'Nu Metal',
         'Acid Rock + Rock n Roll': 'Heavy Metal',
         'Rock n Roll + Blues': 'Garage',
         'Pop + Punk Rock': 'Indie',
@@ -346,4 +351,64 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Load genres from Local Storage when the page loads
     loadGenresFromLocalStorage();
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    const gallery = document.querySelector('.artist-gallery');
+    const prevButton = gallery.querySelector('.prev');
+    const nextButton = gallery.querySelector('.next');
+    const artistDetails = gallery.querySelector('.artist-details');
+    const artistImages = gallery.querySelectorAll('.artist-image img');
+    const artistTexts = gallery.querySelectorAll('.artist-text');
+
+    let currentArtistIndex = 0;
+    const totalArtists = artistImages.length;
+
+    function showArtist(index) {
+        artistImages.forEach(image => image.style.transform = `translateX(${-index * 100}%)`);
+        artistTexts.forEach(text => text.style.transform = `translateX(${-index * 100}%)`);
+    }
+
+    prevButton.addEventListener('click', function() {
+        currentArtistIndex = (currentArtistIndex - 1 + totalArtists) % totalArtists;
+        showArtist(currentArtistIndex);
+    });
+
+    nextButton.addEventListener('click', function() {
+        currentArtistIndex = (currentArtistIndex + 1) % totalArtists;
+        showArtist(currentArtistIndex);
+    });
+});document.addEventListener('DOMContentLoaded', function() {
+    const audioPlayers = document.querySelectorAll('.music-player');
+
+    audioPlayers.forEach(player => {
+        const playButton = player.querySelector('.play-button');
+        const pauseButton = player.querySelector('.pause-button');
+        const stopButton = player.querySelector('.stop-button');
+        const seekBar = player.querySelector('.seek-bar');
+        const audio = player.querySelector('audio');
+
+        playButton.addEventListener('click', () => {
+            audio.play();
+        });
+
+        pauseButton.addEventListener('click', () => {
+            audio.pause();
+        });
+
+        stopButton.addEventListener('click', () => {
+            audio.pause();
+            audio.currentTime = 0;
+        });
+
+        seekBar.addEventListener('change', () => {
+            const time = audio.duration * (seekBar.value / 100);
+            audio.currentTime = time;
+        });
+
+        audio.addEventListener('timeupdate', () => {
+            const value = (100 / audio.duration) * audio.currentTime;
+            seekBar.value = value;
+        });
+    });
 });
