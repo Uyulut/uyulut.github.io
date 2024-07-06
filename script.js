@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const genreList = document.getElementById('genres');
     const resetButton = document.getElementById('reset-button');
 
-   
     const genreCombinations = {
         'Pop + Electronic': 'Electropop',
         'Pop + R&B': 'Contemporary R&B',
@@ -20,10 +19,12 @@ document.addEventListener('DOMContentLoaded', () => {
         'Pop + Classical': 'Orchestral Pop',
         'Pop + Proto Punk': 'Pop Punk',
         'Blues + Proto Punk': 'Punk Blues',
+        'Classical + Blues': 'Ragtime',
         'Pop + Heavy Metal': 'Pop Metal',
         'Soul + R&B': 'Funk',
         'Funk + Rock n Roll': 'Funk Rock',
         'Funk + Jazz': 'Jazz Funk',
+        'Punk Blues + Heavy Metal': 'Biker Metal',
         'Funk + Soul': 'Swamp Rock',
         'Soul + Rock n Roll': 'Soul Rock',
         'Soul Rock + Electronic': 'Electronic Soul Rock',
@@ -178,9 +179,66 @@ document.addEventListener('DOMContentLoaded', () => {
         'Easy Listening + Pop': 'Soft Pop',
         'Western Swing + Rock n Roll': 'Rockabilly',
         'Rockabilly + Rock n Roll': 'Surf Music',
-        'Punk Rock + Ska': 'Ska Punk'
+        'Electropop + R&B': 'Electro R&B',
+'Jazz Pop + Hip Hop': 'Jazz Hop',
+'Pop Rap + Rock n Roll': 'Rap Rock',
+'Pop Blues + Reggae Fusion': 'Blues Reggae',
+'Country Pop + Folk Pop': 'Americana',
+'Folk Punk + Orchestral Pop': 'Chamber Punk',
+'Pop Punk + Funk': 'Funk Punk',
+'Ragtime + Pop Metal': 'Ragtime Metal',
+'Jazz Funk + Biker Metal': 'Heavy Funk',
+'Electronic Soul Rock + Electro House': 'Electronic Soul House',
+'Dub + Electro Punk': 'Cyber Dub',
+'New Age + Post Progressive': 'Cosmic Progressive',
+'Techno + Space Disco': 'Tech Disco',
+'Acid Jazz + Hard Rock': 'Acid Rock Jazz',
+'Dance Pop + Progressive Rock': 'Progressive Dance',
+'Indie Pop + Symphonic Disco': 'Indie Disco',
+'Orchestral Electronic + Alternative Pop': 'Alternative Orchestral',
+'Fusion + Rap Rock': 'Fusion Rap',
+'Swing + Western Swing': 'Neo-Swing',
+'Electronic Dance Music + Trance': 'EDM Trance',
+         
+        'Punk Rock + Ska': 'Ska Punk',
+        'Pop Rock + Electro Country': 'Electro Pop Rock',
+'Contemporary R&B + Indie Rock': 'Indie R&B',
+'House Pop + Hyperpop': 'Hyper House',
+'Adult Contemporary Music + Jazz Rap': 'Contemporary Jazz Pop',
+'Fusion Blues + Electro Blues': 'Electro Fusion Blues',
+'Fusion Rock + Folktronica': 'Folk Fusion Rock',
+'Grunge + Nu Jazz': 'Nu Grunge',
+'Death Metal + Classical Crossover': 'Symphonic Death Metal',
+'Hypnagogic Pop + Lo-Fi': 'Lo-Fi Hypnagogic',
+'Nu Metal + Electro Hop': 'Electronic Nu Metal',
+'Alternative Blues + Garage Blues': 'Alternative Garage Blues',
+'Orchestral Folk + Calypso': 'Orchestral Calypso',
+'Country Blues + Emo Rap': 'Emo Country',
+'Pop Screamo + Synthwave': 'Synth Screamo',
+'Alternative Rock + Soft Rap': 'Alternative Soft Rock',
+'Surf Music + Ska Punk': 'Surf Ska',
+'Bubblegum Pop + Hick Hop': 'Bubblegum Country Rap',
+'Rock n Roll + Heavy Metal': 'Hard Rock',
+'Hard Rock + Progressive Rock': 'Progressive Metal',
+'Progressive Metal + Classical': 'Symphonic Metal',
+'Funk + Punk Rock': 'Funk Punk',
+'Funk Punk + Hip Hop': 'Funk Metal',
+'Reggae + Punk Rock': 'Ska Punk',
+'Ska Punk + Pop': 'Ska Pop',
+'Electronic + Orchestral Electronic': 'Cinematic Electronic',
+'Cinematic Electronic + Ambient': 'Dark Ambient',
+'Dark Ambient + Heavy Metal': 'Drone Metal',
+'Jazz + Bossa Nova': 'Cool Jazz',
+'Cool Jazz + Electronic': 'Nu Jazz',
+'Rockabilly + Punk Rock': 'Psychobilly',
+'Psychobilly + Heavy Metal': 'Gothic Metal',
+'Gothic Metal + Symphonic Metal': 'Symphonic Gothic Metal',
+'Grunge + Heavy Metal': 'Sludge Metal',
+'Sludge Metal + Punk Rock': 'Crust Punk',
+'Crust Punk + Death Metal': 'Grindcore',
+'Grindcore + Electronic': 'Cybergrind'
     };
-
+    
     // Load genres from Local Storage
     function loadGenresFromLocalStorage() {
         const storedGenres = JSON.parse(localStorage.getItem('createdGenres'));
@@ -420,4 +478,54 @@ document.addEventListener('DOMContentLoaded', function() {
             seekBar.value = value;
         });
     });
+});
+// Function to filter and display genres based on search input
+function filterGenres() {
+    var input, filter, genres, genre, i, txtValue;
+    input = document.getElementById('search-bar');
+    filter = input.value.toUpperCase();
+    genres = document.getElementById("genres");
+    genre = genres.getElementsByClassName('genre');
+
+    // Loop through all genre items, hide those that don't match the search query
+    for (i = 0; i < genre.length; i++) {
+        txtValue = genre[i].textContent || genre[i].innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            genre[i].style.display = "";
+        } else {
+            genre[i].style.display = "none";
+        }
+    }
+}
+
+// Add event listener to the search bar input
+document.getElementById('search-bar').addEventListener('input', filterGenres);
+// Function to filter genres based on input
+function filterGenres() {
+    var input, filter, genres, genre;
+    input = document.getElementById('search-bar');
+    filter = input.value.toUpperCase();
+    genres = document.querySelectorAll('.genre');
+
+    genres.forEach(function(genre) {
+        var genreName = genre.innerText.toUpperCase();
+        if (genreName.indexOf(filter) > -1) {
+            genre.style.display = ''; // Show genre if it matches the filter
+        } else {
+            genre.style.display = 'none'; // Hide genre if it doesn't match
+        }
+    });
+}
+
+// Event listener for input changes
+document.getElementById('search-bar').addEventListener('input', filterGenres);
+
+// Event listener for clear button
+document.getElementById('clear-search').addEventListener('click', function() {
+    document.getElementById('search-bar').value = ''; // Clear search bar
+    filterGenres(); // Reset genre display to show all genres
+});
+document.addEventListener('DOMContentLoaded', function() {
+    const instructionsElement = document.getElementById('instructions');
+    instructionsElement.textContent = "Drop 2 genres to make a new one";
 });
