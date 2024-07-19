@@ -10,46 +10,76 @@
 <body>
     <header>
         
-          
         <div class="menu-icon">
+            
             <span></span>
             <span></span>
             <span></span>
         </div>
         <nav>
+            
             <ul>
                 <li><a href="genre-history.html">Genre History</a></li>
                 <li><a href="featured-artists.html">Featured Artists</a></li>
+                <li><a href="aboutus.html">About Us</a></li>
+                <li><a href="credits.html">Credits</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
-        <a href="https://uyulut.github.io/">
-            <img src="Asset 2.svg" alt="Your Logo" class="center" width="10%" height="10%"  />
-          </a>
+        <a href="index.html">
+            <img src="Asset 2.svg" alt="Your Logo" class="logo" width="10%" height="10%"  />
+            <div class="sound-beats">
+                <div class="beat"></div>
+                <div class="beatother"></div>
+                <div class="beat"></div>
+                <div class="beatother"></div>
+                <div class="beat"></div>
+            </div>
+            
+            
+        </a>
           
         <div id="mixing-area">
             
+      
             <div class="turntable">
+                <div class="handle left"></div>
                 <div class="knob"></div>
                 <div class="knob"></div>
+                <div class="handle right"></div>
             </div>
             <div id="instructions">
-               Drop 2 genres to make a new one
-            </div>
-            <div id="drop-zone">
-                
-            </div>
-            <div id="result">
-            </div>
+                Drop 2 genres or more in the drop zone
+                <br> and click MIX
+             </div>
+        
+                <div class="controls-container">
+                    
+                    <div id="button-container">
+                    <button id="mix-button"></button>
+                      <button id="clear-button"></button> 
+                      <div id="volume-control">
+                        <input type="range" id="volume" min="0" max="1" step="0.1" value="1">
+
+                        
+                      </div>
+                    </div>
+                  </div>
+              
             
-            
+                 
+            <div id="drop-zone"></div>
             <div id="genre-search">
+                <button id="reset-button">Start Over</button>
                 <input type="text" id="search-bar" placeholder="Search your genres...">
                 <button id="clear-search">Clear</button>
             </div>
+            <div id="result"></div>
             
+            
+           
             <div id="genres">
                 <!-- Your genre items will be dynamically added here -->
                 <div class="genre" draggable="true">Pop</div>
@@ -68,43 +98,20 @@
                 <div class="genre" draggable="true">Easy Listening</div>
                 <!-- Add more genres as needed -->
             </div>
-           
-
             
         </div>
         
+        
     </main>
-    <button id="reset-button">Start Over</button>
+
+   
+
     <footer>
         <p id="footer-text">&copy; 2024 Music Genre Mix. All rights reserved.</p>
     </footer>
 
     <script src="script.js"></script>
     <script>
-        // Function to filter genres based on input
-        function filterGenres() {
-            var input, filter, gallerySlides, gallerySlide, artistName, i, txtValue;
-            input = document.getElementById('genreInput');
-            filter = input.value.toUpperCase();
-            gallerySlides = document.querySelectorAll('.gallery-slide');
-    
-            gallerySlides.forEach(function(slide) {
-                artistName = slide.querySelector('.artist-details h2');
-                if (artistName) {
-                    txtValue = artistName.textContent || artistName.innerText;
-                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                        slide.style.display = '';
-                    } else {
-                        slide.style.display = 'none';
-                    }
-                }
-            });
-        }
-    
-        // Event listener for input changes
-        document.getElementById('genreInput').addEventListener('input', filterGenres);
-    </script>
-     <script>
         // Function to filter genres based on input
         function filterGenres() {
             var input, filter, genres, genre;
@@ -133,7 +140,17 @@
         document.getElementById('search-bar').addEventListener('input', filterGenres);
 
         // Event listener for clear button
-        document.getElementById('clear-button').addEventListener('click', clearSearch);
+        document.getElementById('clear-search').addEventListener('click', clearSearch);
     </script>
+       <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelector('.menu-icon').addEventListener('click', function() {
+                console.log('Menu icon clicked');
+                document.querySelector('header').classList.toggle('expanded');
+                document.querySelector('nav ul').classList.toggle('show');
+            });
+        });
+        </script>
+        <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 </body>
 </html>
