@@ -717,3 +717,196 @@ footer {
 lottie-player::part(toolbar) {
     display: none !important;
   }
+
+  @media (max-width: 768px) {
+    body {
+        font-size: 16px;
+    }
+
+    #mixing-area {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-top: 20px;
+        padding: 0;
+        
+
+    }
+
+    .turntable {
+        height: 100px;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+
+    }
+
+    .turntable .handle {
+        width: 60px;
+        height: 60px;
+        border-radius: 30px;
+        margin: 0;
+        padding: 0;
+
+    }
+
+    .turntable .knob {
+        width: 30px;
+        height: 30px;
+        border-radius: 15px;
+        margin: 0;
+        padding: 0;
+    }
+
+    #genres {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        margin-top: 20px;
+        padding: 0;
+    }
+
+    .genre {
+        margin: 10px;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+
+    }
+
+    #drop-zone {
+        margin-right: auto;
+        margin-left: auto;
+
+
+    }
+
+    .controls-container {
+        flex-direction: column;
+        justify-content: center;
+        margin-top: -20px;
+        margin-left: -100px;    
+
+    }
+
+    #button-container {
+        flex-direction: row;
+        justify-content: center;
+        margin-top: 20px;
+        margin-left: 50px;
+
+
+    
+    }
+
+    #search-bar {
+        width: 70%;
+        margin-top: -900px;
+        padding-top: auto;
+        padding-bottom: auto;
+        margin-left: 110px;
+        margin-right: -100px;
+
+
+    }
+
+
+
+    #clear-search {
+        margin-top: -900px;
+        margin-left: 45px;
+        margin-right: -50px;
+
+     
+    }
+
+    #reset-button {
+        margin-top: 5px;
+        margin-bottom: -30px;
+        margin-left: -55px;
+
+    }
+
+    #volume {
+        margin-top: 20px;
+        margin-left: 50px;
+
+    }
+
+    .logo {
+        margin-top: -20px;
+        margin-left: 50px;
+
+    }
+
+    .sound-beats {
+        margin-top: -20px;
+        margin-left: 50px;
+
+
+    }
+
+    footer {
+        margin-top: 140px;
+        position: relative;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+
+    }
+}
+
+@media (max-width: 480px) {
+    #mixing-area {
+        margin-top: 10px;
+        margin-left: -10px;
+        padding: 10px;
+        width: 90%;
+        height: 400px;
+
+    }
+
+    .turntable {
+        height: 80px;
+        margin-left: 10px;
+        margin-top: -50px;
+
+    }
+
+    .turntable .handle {
+        width: 40px;
+        height: 40px;
+        margin-left: 10px;
+
+    }
+
+    .turntable .knob {
+        width: 20px;
+        height: 20px;
+
+    }
+
+    .genre {
+        font-size: 0.7em;
+        padding: 4px 8px;
+        margin: 2px;
+
+    }
+
+    #drop-zone {
+        margin-top: -80px;
+        margin-left: 10px;
+        padding: 10px;
+        width: 90%;
+    }
+
+    #volume {
+        width: 90%;
+        margin-top: 20px;
+
+    }
+}
