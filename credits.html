@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Credits</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="menu-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="genre-history.html">Genre History</a></li>
+                <li><a href="featured-artists.html">Featured Artists</a></li>
+                <li><a href="aboutus.html">About Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <a href="index.html">
+            <img src="Asset 2.svg" alt="Your Logo" class="logo" width="10%" height="10%"  />
+        </a>
+        
+        
+        <div id="mixing-area" style="overflow-y: auto; max-height: none;"
+      
+            <h1>Music Credits</h1>
+        <p>All the music is from https://www.epidemicsound.com/ for personal use</p>
+       
+</div>
+    </main>
+
+    <footer>
+        <p id="footer-text">&copy; 2024 Music Genre Mix. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.gallery-slide');
+            const prevButton = document.querySelector('.gallery-prev');
+            const nextButton = document.querySelector('.gallery-next');
+            let currentIndex = 0;
+
+            function showSlide(index) {
+                const totalSlides = slides.length;
+                if (index >= totalSlides) {
+                    currentIndex = 0;
+                } else if (index < 0) {
+                    currentIndex = totalSlides - 1;
+                } else {
+                    currentIndex = index;
+                }
+
+                const newTransform = -currentIndex * 100;
+                document.querySelector('.gallery-slider').style.transform = `translateX(${newTransform}%)`;
+            }
+
+            prevButton.addEventListener('click', () => {
+                showSlide(currentIndex - 1);
+            });
+
+            nextButton.addEventListener('click', () => {
+                showSlide(currentIndex + 1);
+            });
+
+            showSlide(currentIndex);
+        });
+    </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                document.querySelector('.menu-icon').addEventListener('click', function() {
+                    console.log('Menu icon clicked');
+                    document.querySelector('header').classList.toggle('expanded');
+                    document.querySelector('nav ul').classList.toggle('show');
+                });
+            });
+            </script>
+</body>
+</html>
