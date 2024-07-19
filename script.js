@@ -264,49 +264,66 @@ document.addEventListener('DOMContentLoaded', () => {
         'Folk + Country + Blues + Bluegrass + Gospel': 'Americana'
     };
 
-   // Audio map
     const genreAudioMap = {
-        'Pop': new Audio('pop.mp3'),
-        'Rock n Roll': new Audio('rocknroll.mp3'),
-        'Hip Hop': new Audio('hiphop.mp3'),
-        'Electronic': new Audio('electronic.mp3'),
-        'Jazz': new Audio('jazz.mp3'),
-        'Blues': new Audio('blues.mp3'),
-        'Classical': new Audio('classical.mp3'),
-        'Folk': new Audio('folk.mp3'),
-        'Country': new Audio('country.mp3'),
-        'R&B': new Audio('rnb.mp3'),
-        'Reggae': new Audio('reggae.mp3'),
-        'Proto Punk': new Audio('protopunk.mp3'),
+        'Pop': new Audio('ES_Overthinker - Mindme - 36000-51000.wav'),
+        'Rock n Roll': new Audio('ES_My Domain - Non-State Actor - 26000-41000.wav'),
+        'Hip Hop': new Audio('es-letsgetit-bahabanks.wav'),
+        'Electronic': new Audio('ES_Pebbles - Rocket Jr - 25000-40000.wav'),
+        'Jazz': new Audio('ES_A Summer Nights Kiss - Wendy Marcini - 13000-28000.wav'),
+        'Blues': new Audio('ES_2nd Street Shuffle - Roots and Recognition - 11000-26000.wav'),
+        'Classical': new Audio('ES_Mozart_ Piano Concerto No. 23 in A major, K. 488_ III. Allegro assai - Mira Ma - 10000-25000.wav'),
+        'Folk': new Audio('ES_Pearls Stroll - American Legion - 13000-28000.wav'),
+        'Country': new Audio('ES_Heartbreak Alley - Roots and Recognition - 14000-29000.wav'),
+        'R&B': new Audio('ES_Let Me Go - Snake City - 15000-30000.wav'),
+        'Reggae': new Audio('ES_Penguins - Daniel Fridell - 8000-23000.wav'),
+        'Proto Punk': new Audio('ES_Bones - Coma Svensson - 17000-32000.wav'),
         'Progressive': new Audio('progressive.mp3'),
-        'Easy Listening': new Audio('easylistening.mp3')
+        'Easy Listening': new Audio('ES_Done Deal No_ - Harry Edvino - 9000-24000.wav')
+    };
+   
+    const resultAudioMap = {
+        'Pop Rock': new Audio('ES_A Heartless World - Mindme - 9000-24000.wav'),
+        'Soft Rock': new Audio('ES_Psalm 91 - JOYSPRING - 35000-50000.wav'),
+        // Add more result genres and their corresponding audio files here
     };
 
-    function playAudio(genre) {
-        if (genreAudioMap[genre]) {
-            genreAudioMap[genre].volume = volumeControl.value;
-            genreAudioMap[genre].play();
+    function playAudio(genre, isResult = false) {
+        let audioMap = isResult ? resultAudioMap : genreAudioMap;
+        console.log('Playing audio for:', genre, 'isResult:', isResult);
+        if (audioMap[genre]) {
+            if (currentPlayingGenre) {
+                stopAudio(currentPlayingGenre, currentPlayingGenre in resultAudioMap);
+            }
+            audioMap[genre].volume = volumeControl.value;
+            audioMap[genre].play().catch(e => console.error('Error playing audio:', e));
             currentPlayingGenre = genre;
         } else {
             console.error(`No audio found for genre: ${genre}`);
         }
     }
 
-    function stopAudio(genre) {
-        if (genre && genreAudioMap[genre]) {
-            genreAudioMap[genre].pause();
-            genreAudioMap[genre].currentTime = 0;
+    function stopAudio(genre, isResult = false) {
+        let audioMap = isResult ? resultAudioMap : genreAudioMap;
+        if (genre && audioMap[genre]) {
+            audioMap[genre].pause();
+            audioMap[genre].currentTime = 0;
             if (genre === currentPlayingGenre) {
                 currentPlayingGenre = null;
             }
         }
     }
 
-    function playResultAudio() {
-        const resultAudio = new Audio('result.mp3');
-        resultAudio.play();
+    function playResultAudio(fusionResult) {
+        console.log('Attempting to play result audio for:', fusionResult);
+        if (fusionResult in resultAudioMap) {
+            console.log('Audio found for result genre, playing...');
+            playAudio(fusionResult, true);
+        } else {
+            console.log(`No specific audio for ${fusionResult}, playing a default audio...`);
+            // You can add logic here to play a default audio for unknown fusion results
+        }
     }
-
+    
     genres.forEach(genre => {
         genre.addEventListener('dragstart', dragStart);
     });
@@ -355,6 +372,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     
         const sortedGenres = droppedGenres.sort().join(' + ');
+        console.log('Mixing genres:', sortedGenres);
         let fusionResult = genreCombinations[sortedGenres];
     
         if (!fusionResult) {
@@ -362,6 +380,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     
         if (fusionResult) {
+            console.log('Fusion result:', fusionResult);
             const isNewGenre = !Array.from(genreList.children).some(child => child.textContent === fusionResult);
             if (isNewGenre) {
                 result.textContent = `New Genre Created: ${fusionResult}`;
@@ -370,8 +389,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 result.textContent = `Existing Genre: ${fusionResult}`;
             }
             resetButton.style.display = 'block';
-            playResultAudio();
+            playResultAudio(fusionResult);
         } else {
+            console.log('Unknown fusion');
             result.textContent = `${sortedGenres} = Unknown Fusion`;
         }
     
@@ -492,7 +512,27 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let genre in genreAudioMap) {
             genreAudioMap[genre].volume = volume;
         }
+        for (let genre in resultAudioMap) {
+            resultAudioMap[genre].volume = volume;
+        }
     }
 
     volumeControl.addEventListener('input', updateVolume);
 });
+
+function loadAudio(url) {
+    return new Promise((resolve, reject) => {
+        const audio = new Audio(url);
+        audio.addEventListener('canplaythrough', () => resolve(audio));
+        audio.addEventListener('error', (e) => reject(e));
+    });
+}
+
+// שימוש:
+loadAudio('ES_A Heartless World - Mindme - 9000-24000.wav')
+    .then(audio => {
+        resultAudioMap['Pop Rock'] = audio;
+    })
+    .catch(error => {
+        console.error('Failed to load audio:', error);
+    });
