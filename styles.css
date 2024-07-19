@@ -838,14 +838,12 @@ lottie-player::part(toolbar) {
     }
 
     .logo {
-        margin-top: -20px;
-        margin-left: 50px;
+       display: none;
 
     }
 
     .sound-beats {
-        margin-top: -20px;
-        margin-left: 50px;
+        display: none;
 
 
     }
@@ -981,14 +979,12 @@ lottie-player::part(toolbar) {
     }
 
     .logo {
-        margin-top: -20px;
-        margin-left: 50px;
+        display: none;
 
     }
 
     .sound-beats {
-        margin-top: -20px;
-        margin-left: 50px;
+        display: none;
 
 
     }
