@@ -4,6 +4,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const result = document.getElementById('result');
     const genreList = document.getElementById('genres');
     const resetButton = document.getElementById('reset-button');
+    const clearButton = document.getElementById('clear-button');
+    const mixButton = document.getElementById('mix-button');
+    const volumeControl = document.getElementById('volume');
+
+    let droppedGenres = [];
+    let currentPlayingGenre = null;
 
     const genreCombinations = {
         'Pop + Electronic': 'Electropop',
@@ -180,96 +186,125 @@ document.addEventListener('DOMContentLoaded', () => {
         'Western Swing + Rock n Roll': 'Rockabilly',
         'Rockabilly + Rock n Roll': 'Surf Music',
         'Electropop + R&B': 'Electro R&B',
-'Jazz Pop + Hip Hop': 'Jazz Hop',
-'Pop Rap + Rock n Roll': 'Rap Rock',
-'Pop Blues + Reggae Fusion': 'Blues Reggae',
-'Country Pop + Folk Pop': 'Americana',
-'Folk Punk + Orchestral Pop': 'Chamber Punk',
-'Pop Punk + Funk': 'Funk Punk',
-'Ragtime + Pop Metal': 'Ragtime Metal',
-'Jazz Funk + Biker Metal': 'Heavy Funk',
-'Electronic Soul Rock + Electro House': 'Electronic Soul House',
-'Dub + Electro Punk': 'Cyber Dub',
-'New Age + Post Progressive': 'Cosmic Progressive',
-'Techno + Space Disco': 'Tech Disco',
-'Acid Jazz + Hard Rock': 'Acid Rock Jazz',
-'Dance Pop + Progressive Rock': 'Progressive Dance',
-'Indie Pop + Symphonic Disco': 'Indie Disco',
-'Orchestral Electronic + Alternative Pop': 'Alternative Orchestral',
-'Fusion + Rap Rock': 'Fusion Rap',
-'Swing + Western Swing': 'Neo-Swing',
-'Electronic Dance Music + Trance': 'EDM Trance',
-         
+        'Jazz Pop + Hip Hop': 'Jazz Hop',
+        'Pop Rap + Rock n Roll': 'Rap Rock',
+        'Pop Blues + Reggae Fusion': 'Blues Reggae',
+        'Country Pop + Folk Pop': 'Americana',
+        'Folk Punk + Orchestral Pop': 'Chamber Punk',
+        'Pop Punk + Funk': 'Funk Punk',
+        'Ragtime + Pop Metal': 'Ragtime Metal',
+        'Jazz Funk + Biker Metal': 'Heavy Funk',
+        'Electronic Soul Rock + Electro House': 'Electronic Soul House',
+        'Dub + Electro Punk': 'Cyber Dub',
+        'New Age + Post Progressive': 'Cosmic Progressive',
+        'Techno + Space Disco': 'Tech Disco',
+        'Acid Jazz + Hard Rock': 'Acid Rock Jazz',
+        'Dance Pop + Progressive Rock': 'Progressive Dance',
+        'Indie Pop + Symphonic Disco': 'Indie Disco',
+        'Orchestral Electronic + Alternative Pop': 'Alternative Orchestral',
+        'Fusion + Rap Rock': 'Fusion Rap',
+        'Swing + Western Swing': 'Neo-Swing',
+        'Electronic Dance Music + Trance': 'EDM Trance',
         'Punk Rock + Ska': 'Ska Punk',
         'Pop Rock + Electro Country': 'Electro Pop Rock',
-'Contemporary R&B + Indie Rock': 'Indie R&B',
-'House Pop + Hyperpop': 'Hyper House',
-'Adult Contemporary Music + Jazz Rap': 'Contemporary Jazz Pop',
-'Fusion Blues + Electro Blues': 'Electro Fusion Blues',
-'Fusion Rock + Folktronica': 'Folk Fusion Rock',
-'Grunge + Nu Jazz': 'Nu Grunge',
-'Death Metal + Classical Crossover': 'Symphonic Death Metal',
-'Hypnagogic Pop + Lo-Fi': 'Lo-Fi Hypnagogic',
-'Nu Metal + Electro Hop': 'Electronic Nu Metal',
-'Alternative Blues + Garage Blues': 'Alternative Garage Blues',
-'Orchestral Folk + Calypso': 'Orchestral Calypso',
-'Country Blues + Emo Rap': 'Emo Country',
-'Pop Screamo + Synthwave': 'Synth Screamo',
-'Alternative Rock + Soft Rap': 'Alternative Soft Rock',
-'Surf Music + Ska Punk': 'Surf Ska',
-'Bubblegum Pop + Hick Hop': 'Bubblegum Country Rap',
-'Rock n Roll + Heavy Metal': 'Hard Rock',
-'Hard Rock + Progressive Rock': 'Progressive Metal',
-'Progressive Metal + Classical': 'Symphonic Metal',
-'Funk + Punk Rock': 'Funk Punk',
-'Funk Punk + Hip Hop': 'Funk Metal',
-'Reggae + Punk Rock': 'Ska Punk',
-'Ska Punk + Pop': 'Ska Pop',
-'Electronic + Orchestral Electronic': 'Cinematic Electronic',
-'Cinematic Electronic + Ambient': 'Dark Ambient',
-'Dark Ambient + Heavy Metal': 'Drone Metal',
-'Jazz + Bossa Nova': 'Cool Jazz',
-'Cool Jazz + Electronic': 'Nu Jazz',
-'Rockabilly + Punk Rock': 'Psychobilly',
-'Psychobilly + Heavy Metal': 'Gothic Metal',
-'Gothic Metal + Symphonic Metal': 'Symphonic Gothic Metal',
-'Grunge + Heavy Metal': 'Sludge Metal',
-'Sludge Metal + Punk Rock': 'Crust Punk',
-'Crust Punk + Death Metal': 'Grindcore',
-'Grindcore + Electronic': 'Cybergrind'
+        'Contemporary R&B + Indie Rock': 'Indie R&B',
+        'House Pop + Hyperpop': 'Hyper House',
+        'Adult Contemporary Music + Jazz Rap': 'Contemporary Jazz Pop',
+        'Fusion Blues + Electro Blues': 'Electro Fusion Blues',
+        'Fusion Rock + Folktronica': 'Folk Fusion Rock',
+        'Grunge + Nu Jazz': 'Nu Grunge',
+        'Death Metal + Classical Crossover': 'Symphonic Death Metal',
+        'Hypnagogic Pop + Lo-Fi': 'Lo-Fi Hypnagogic',
+        'Nu Metal + Electro Hop': 'Electronic Nu Metal',
+        'Alternative Blues + Garage Blues': 'Alternative Garage Blues',
+        'Orchestral Folk + Calypso': 'Orchestral Calypso',
+        'Country Blues + Emo Rap': 'Emo Country',
+        'Pop Screamo + Synthwave': 'Synth Screamo',
+        'Alternative Rock + Soft Rap': 'Alternative Soft Rock',
+        'Surf Music + Ska Punk': 'Surf Ska',
+        'Bubblegum Pop + Hick Hop': 'Bubblegum Country Rap',
+        'Rock n Roll + Heavy Metal': 'Hard Rock',
+        'Hard Rock + Progressive Rock': 'Progressive Metal',
+        'Progressive Metal + Classical': 'Symphonic Metal',
+        'Funk + Punk Rock': 'Funk Punk',
+        'Funk Punk + Hip Hop': 'Funk Metal',
+        'Reggae + Punk Rock': 'Ska Punk',
+        'Ska Punk + Pop': 'Ska Pop',
+        'Electronic + Orchestral Electronic': 'Cinematic Electronic',
+        'Cinematic Electronic + Ambient': 'Dark Ambient',
+        'Dark Ambient + Heavy Metal': 'Drone Metal',
+        'Jazz + Bossa Nova': 'Cool Jazz',
+        'Cool Jazz + Electronic': 'Nu Jazz',
+        'Rockabilly + Punk Rock': 'Psychobilly',
+        'Psychobilly + Heavy Metal': 'Gothic Metal',
+        'Gothic Metal + Symphonic Metal': 'Symphonic Gothic Metal',
+        'Grunge + Heavy Metal': 'Sludge Metal',
+        'Sludge Metal + Punk Rock': 'Crust Punk',
+        'Crust Punk + Death Metal': 'Grindcore',
+        'Grindcore + Electronic': 'Cybergrind',
+        'Rock n Roll + Blues + Country': 'Roots Rock',
+        'Electronic + Hip Hop + R&B': 'Trip Hop',
+        'Jazz + Funk + Hip Hop': 'Acid Jazz',
+        'Pop + Rock n Roll + Electronic': 'Synth Rock',
+        'Classical + Electronic + Ambient': 'Modern Classical',
+        'Folk + Rock n Roll + Country': 'Americana',
+        'Reggae + Pop + R&B': 'Reggae Fusion',
+        'Jazz + Classical + Pop': 'Third Stream',
+        'Blues + Rock n Roll + Heavy Metal': 'Blues Rock',
+        'Hip Hop + Electronic + Dance': 'Electro Hip Hop',
+        'Rock n Roll + Electronic + Pop + Hip Hop': 'Industrial Hip Hop',
+        'Jazz + Classical + Electronic + Ambient': 'Nu Jazz',
+        'Folk + Country + Rock n Roll + Blues': 'Southern Rock',
+        'Electronic + Dance + Pop + R&B': 'Electropop',
+        'Hip Hop + R&B + Jazz + Soul': 'Neo Soul',
+        'Rock n Roll + Blues + Jazz + Country + Folk': 'Roots Music',
+        'Electronic + Hip Hop + R&B + Pop + Dance': 'Contemporary R&B',
+        'Classical + Jazz + Electronic + Ambient + World Music': 'New Age',
+        'Pop + Rock n Roll + Electronic + Hip Hop + R&B': 'Alternative R&B',
+        'Folk + Country + Blues + Bluegrass + Gospel': 'Americana'
     };
-    
-    // Load genres from Local Storage
-    function loadGenresFromLocalStorage() {
-        const storedGenres = JSON.parse(localStorage.getItem('createdGenres'));
-        if (storedGenres && storedGenres.length > 0) {
-            storedGenres.forEach(genre => {
-                createNewGenreElement(genre, false);
-            });
+
+   // Audio map
+    const genreAudioMap = {
+        'Pop': new Audio('pop.mp3'),
+        'Rock n Roll': new Audio('rocknroll.mp3'),
+        'Hip Hop': new Audio('hiphop.mp3'),
+        'Electronic': new Audio('electronic.mp3'),
+        'Jazz': new Audio('jazz.mp3'),
+        'Blues': new Audio('blues.mp3'),
+        'Classical': new Audio('classical.mp3'),
+        'Folk': new Audio('folk.mp3'),
+        'Country': new Audio('country.mp3'),
+        'R&B': new Audio('rnb.mp3'),
+        'Reggae': new Audio('reggae.mp3'),
+        'Proto Punk': new Audio('protopunk.mp3'),
+        'Progressive': new Audio('progressive.mp3'),
+        'Easy Listening': new Audio('easylistening.mp3')
+    };
+
+    function playAudio(genre) {
+        if (genreAudioMap[genre]) {
+            genreAudioMap[genre].volume = volumeControl.value;
+            genreAudioMap[genre].play();
+            currentPlayingGenre = genre;
         } else {
-            initializeDefaultGenres();
+            console.error(`No audio found for genre: ${genre}`);
         }
     }
 
-    function initializeDefaultGenres() {
-        const defaultGenres = ['Pop', 'Rock n Roll', 'Hip Hop', 'Electronic', 'Jazz', 'Blues', 'Classical', 'Folk', 'Country', 'R&B', 'Reggae', 'Proto Punk', 'Progressive', 'Easy Listening'];
-        defaultGenres.forEach(genre => {
-            createNewGenreElement(genre, false);
-        });
+    function stopAudio(genre) {
+        if (genre && genreAudioMap[genre]) {
+            genreAudioMap[genre].pause();
+            genreAudioMap[genre].currentTime = 0;
+            if (genre === currentPlayingGenre) {
+                currentPlayingGenre = null;
+            }
+        }
     }
 
-    function saveGenresToLocalStorage() {
-        const createdGenres = Array.from(genreList.children).map(genre => genre.textContent);
-        localStorage.setItem('createdGenres', JSON.stringify(createdGenres));
-    }
-
-    function resetGame() {
-        localStorage.removeItem('createdGenres');
-        genreList.innerHTML = '';
-        dropZone.innerHTML = '';
-        result.textContent = '';
-        resetButton.style.display = 'none';
-        initializeDefaultGenres();
+    function playResultAudio() {
+        const resultAudio = new Audio('result.mp3');
+        resultAudio.play();
     }
 
     genres.forEach(genre => {
@@ -278,113 +313,89 @@ document.addEventListener('DOMContentLoaded', () => {
 
     dropZone.addEventListener('dragover', dragOver);
     dropZone.addEventListener('drop', drop);
-    document.body.addEventListener('dragover', bodyDragOver);
-    document.body.addEventListener('drop', bodyDrop);
-
-    resetButton.addEventListener('click', resetGame);
+    dropZone.addEventListener('dragleave', dragLeave);
 
     function dragStart(e) {
         e.dataTransfer.setData('text/plain', e.target.textContent);
-        if (e.target.closest('#drop-zone')) {
-            setTimeout(() => {
-                e.target.classList.add('dragging');
-            }, 0);
-        }
     }
 
     function dragOver(e) {
         e.preventDefault();
+        this.classList.add('dragover');
     }
 
-    function bodyDragOver(e) {
-        e.preventDefault();
-    }
-
-    function bodyDrop(e) {
-        const draggingElement = document.querySelector('.dragging');
-        if (draggingElement && draggingElement.closest('#drop-zone')) {
-            draggingElement.remove();
-            updateResult();
+    function dragLeave(e) {
+        this.classList.remove('dragover');
+        if (currentPlayingGenre !== null) {
+            stopAudio(currentPlayingGenre);
+            currentPlayingGenre = null;
         }
     }
 
     function drop(e) {
         e.preventDefault();
-        const genreName = e.dataTransfer.getData('text');
-        
-        if (!Array.from(dropZone.children).some(child => child.textContent.includes(genreName))) {
-            const newGenre = document.createElement('div');
-            newGenre.className = 'genre';
-            newGenre.draggable = true;
-            newGenre.innerHTML = `${genreName}<span class="remove">×</span>`;
-            newGenre.addEventListener('dragstart', dragStart);
-            
-            const removeButton = newGenre.querySelector('.remove');
-            removeButton.addEventListener('click', removeGenre);
-            
-            dropZone.appendChild(newGenre);
-            updateResult();
-        }
-        
-        // Hide the placeholder text when genres are dropped
-        const placeholderText = dropZone.querySelector('.placeholder-text');
-        if (placeholderText) {
-            placeholderText.style.display = 'none';
-        }
-    }
-
-    function removeGenre(e) {
-        e.target.closest('.genre').remove();
-        updateResult();
-    }
-
-    function updateResult() {
-        const mixedGenres = Array.from(dropZone.children).map(child => child.textContent.replace('×', '').trim());
-        if (mixedGenres.length > 1) {
-            const sortedGenres = mixedGenres.sort().join(' + ');
-            let fusionResult = genreCombinations[sortedGenres];
-            if (!fusionResult) {
-                fusionResult = findComplexCombination(mixedGenres);
+        this.classList.remove('dragover');
+        const genre = e.dataTransfer.getData('text/plain');
+        if (!droppedGenres.includes(genre)) {
+            if (currentPlayingGenre) {
+                stopAudio(currentPlayingGenre);
             }
-            result.textContent = `${sortedGenres} = ${fusionResult || 'Unknown Fusion'}`;
-            if (fusionResult && fusionResult !== 'Unknown Fusion') {
-                console.log(`Fusion result: ${fusionResult}`); // Add log message for debugging
+            droppedGenres.push(genre);
+            playAudio(genre);
+            updateDropZone();
+        }
+    }
+
+    mixButton.addEventListener('click', mixGenres);
+
+    function mixGenres() {
+        if (droppedGenres.length < 2) {
+            alert('Please drop at least two genres to mix.');
+            return;
+        }
+    
+        const sortedGenres = droppedGenres.sort().join(' + ');
+        let fusionResult = genreCombinations[sortedGenres];
+    
+        if (!fusionResult) {
+            fusionResult = findComplexCombination(droppedGenres);
+        }
+    
+        if (fusionResult) {
+            const isNewGenre = !Array.from(genreList.children).some(child => child.textContent === fusionResult);
+            if (isNewGenre) {
+                result.textContent = `New Genre Created: ${fusionResult}`;
                 createNewGenreElement(fusionResult, true);
-                resetButton.style.display = 'block'; // Show reset button
+            } else {
+                result.textContent = `Existing Genre: ${fusionResult}`;
             }
-            clearDropZone(); // Clear the drop zone after result
+            resetButton.style.display = 'block';
+            playResultAudio();
         } else {
-            result.textContent = '';
+            result.textContent = `${sortedGenres} = Unknown Fusion`;
         }
+    
+        clearDropZone();
     }
-
+    
     function clearDropZone() {
-        while (dropZone.firstChild) {
-            dropZone.removeChild(dropZone.firstChild);
+        droppedGenres = [];
+        dropZone.innerHTML = '';
+        
+        if (currentPlayingGenre) {
+            stopAudio(currentPlayingGenre);
+            currentPlayingGenre = null;
         }
     }
-
-    function createNewGenreElement(fusionResult, save = true) {
-        console.log(`Creating new genre element: ${fusionResult}`); // Add log message for debugging
-        if (!Array.from(genreList.children).some(child => child.textContent.includes(fusionResult))) {
-            const newFusionGenre = document.createElement('div');
-            newFusionGenre.className = 'genre';
-            newFusionGenre.draggable = true;
-            newFusionGenre.innerHTML = `${fusionResult}`;
-            newFusionGenre.addEventListener('dragstart', dragStart);
-            genreList.appendChild(newFusionGenre);
-            
-            // Add scrollable class if genres exceed max height
-            if (genreList.scrollHeight > genreList.clientHeight) {
-                genreList.classList.add('scrollable');
-            }
-
-            if (save) {
-                saveGenresToLocalStorage();
-            }
-        } else {
-            console.log(`Genre ${fusionResult} already exists in the list.`);
-        }
+    
+    function updateDropZone() {
+        dropZone.innerHTML = '';
+        droppedGenres.forEach(genre => {
+            const genreElement = document.createElement('div');
+            genreElement.classList.add('genre');
+            genreElement.textContent = genre;
+            dropZone.appendChild(genreElement);
+        });
     }
 
     function findComplexCombination(genres) {
@@ -396,11 +407,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         return null;
     }
-    document.querySelector('.menu-icon').addEventListener('click', function() {
-        console.log('Menu icon clicked');
-        document.querySelector('header').classList.toggle('expanded');
-        document.querySelector('nav ul').classList.toggle('show');
-    });
+
     function generateCombinations(array) {
         if (array.length === 1) {
             return array;
@@ -416,116 +423,76 @@ document.addEventListener('DOMContentLoaded', () => {
         return result;
     }
 
-    // Load genres from Local Storage when the page loads
+    function createNewGenreElement(fusionResult, save = true) {
+        console.log(`Creating new genre element: ${fusionResult}`);
+        if (!Array.from(genreList.children).some(child => child.textContent.includes(fusionResult))) {
+            const newFusionGenre = document.createElement('div');
+            newFusionGenre.className = 'genre';
+            newFusionGenre.draggable = true;
+            newFusionGenre.innerHTML = `${fusionResult}`;
+            newFusionGenre.addEventListener('dragstart', dragStart);
+            genreList.appendChild(newFusionGenre);
+
+            if (genreList.scrollHeight > genreList.clientHeight) {
+                genreList.classList.add('scrollable');
+            }
+            if (save) {
+                saveGenresToLocalStorage();
+            }
+        } else {
+            console.log(`Genre ${fusionResult} already exists in the list.`);
+        }
+    }
+
+    clearButton.addEventListener('click', clearDropZone);
+    resetButton.addEventListener('click', function() {
+        clearDropZone();
+        genreList.innerHTML = '';
+        localStorage.removeItem('createdGenres');
+        initializeDefaultGenres();
+        resetButton.style.display = 'none';
+        result.textContent = '';
+    });
+
+    function loadGenresFromLocalStorage() {
+        let storedGenres;
+        try {
+            storedGenres = JSON.parse(localStorage.getItem('createdGenres')) || [];
+        } catch (error) {
+            console.error('Error parsing stored genres:', error);
+            storedGenres = [];
+        }
+        storedGenres.forEach(genre => {
+            if (genre) {
+                createNewGenreElement(genre, false);
+            }
+        });
+        if (storedGenres.length === 0) {
+            initializeDefaultGenres();
+        }
+    }
+
+    function initializeDefaultGenres() {
+        const defaultGenres = ['Pop', 'Rock n Roll', 'Hip Hop', 'Electronic', 'Jazz', 'Blues', 'Classical', 'Folk', 'Country', 'R&B', 'Reggae', 'Proto Punk', 'Progressive', 'Easy Listening'];
+        defaultGenres.forEach(genre => {
+            createNewGenreElement(genre, false);
+        });
+        saveGenresToLocalStorage();
+    }
+
+    function saveGenresToLocalStorage() {
+        const createdGenres = Array.from(genreList.children).map(genre => genre.textContent);
+        localStorage.setItem('createdGenres', JSON.stringify(createdGenres));
+    }
+
     loadGenresFromLocalStorage();
-});
 
-document.addEventListener('DOMContentLoaded', function() {
-    const gallery = document.querySelector('.artist-gallery');
-    const prevButton = gallery.querySelector('.prev');
-    const nextButton = gallery.querySelector('.next');
-    const artistDetails = gallery.querySelector('.artist-details');
-    const artistImages = gallery.querySelectorAll('.artist-image img');
-    const artistTexts = gallery.querySelectorAll('.artist-text');
-
-    let currentArtistIndex = 0;
-    const totalArtists = artistImages.length;
-
-    function showArtist(index) {
-        artistImages.forEach(image => image.style.transform = `translateX(${-index * 100}%)`);
-        artistTexts.forEach(text => text.style.transform = `translateX(${-index * 100}%)`);
-    }
-
-    prevButton.addEventListener('click', function() {
-        currentArtistIndex = (currentArtistIndex - 1 + totalArtists) % totalArtists;
-        showArtist(currentArtistIndex);
-    });
-
-    nextButton.addEventListener('click', function() {
-        currentArtistIndex = (currentArtistIndex + 1) % totalArtists;
-        showArtist(currentArtistIndex);
-    });
-});document.addEventListener('DOMContentLoaded', function() {
-    const audioPlayers = document.querySelectorAll('.music-player');
-
-    audioPlayers.forEach(player => {
-        const playButton = player.querySelector('.play-button');
-        const pauseButton = player.querySelector('.pause-button');
-        const stopButton = player.querySelector('.stop-button');
-        const seekBar = player.querySelector('.seek-bar');
-        const audio = player.querySelector('audio');
-
-        playButton.addEventListener('click', () => {
-            audio.play();
-        });
-
-        pauseButton.addEventListener('click', () => {
-            audio.pause();
-        });
-
-        stopButton.addEventListener('click', () => {
-            audio.pause();
-            audio.currentTime = 0;
-        });
-
-        seekBar.addEventListener('change', () => {
-            const time = audio.duration * (seekBar.value / 100);
-            audio.currentTime = time;
-        });
-
-        audio.addEventListener('timeupdate', () => {
-            const value = (100 / audio.duration) * audio.currentTime;
-            seekBar.value = value;
-        });
-    });
-});
-// Function to filter and display genres based on search input
-function filterGenres() {
-    var input, filter, genres, genre, i, txtValue;
-    input = document.getElementById('search-bar');
-    filter = input.value.toUpperCase();
-    genres = document.getElementById("genres");
-    genre = genres.getElementsByClassName('genre');
-
-    // Loop through all genre items, hide those that don't match the search query
-    for (i = 0; i < genre.length; i++) {
-        txtValue = genre[i].textContent || genre[i].innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            genre[i].style.display = "";
-        } else {
-            genre[i].style.display = "none";
+    function updateVolume() {
+        const volume = volumeControl.value;
+        for (let genre in genreAudioMap) {
+            genreAudioMap[genre].volume = volume;
         }
     }
-}
 
-// Add event listener to the search bar input
-document.getElementById('search-bar').addEventListener('input', filterGenres);
-// Function to filter genres based on input
-function filterGenres() {
-    var input, filter, genres, genre;
-    input = document.getElementById('search-bar');
-    filter = input.value.toUpperCase();
-    genres = document.querySelectorAll('.genre');
-
-    genres.forEach(function(genre) {
-        var genreName = genre.innerText.toUpperCase();
-        if (genreName.indexOf(filter) > -1) {
-            genre.style.display = ''; // Show genre if it matches the filter
-        } else {
-            genre.style.display = 'none'; // Hide genre if it doesn't match
-        }
-    });
-}
-
-// Event listener for input changes
-document.getElementById('search-bar').addEventListener('input', filterGenres);
-
-// Event listener for clear button
-document.getElementById('clear-search').addEventListener('click', function() {
-    document.getElementById('search-bar').value = ''; // Clear search bar
-    filterGenres(); // Reset genre display to show all genres
-});
-document.addEventListener('DOMContentLoaded', function() {
-    const instructionsElement = document.getElementById('instructions');
-    instructionsElement.textContent = "Drop 2 genres to make a new one";
+    volumeControl.addEventListener('input', updateVolume);
 });
