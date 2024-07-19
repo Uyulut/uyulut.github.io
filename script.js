@@ -284,6 +284,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const resultAudioMap = {
         'Pop Rock': new Audio('ES_A Heartless World - Mindme - 9000-24000.wav'),
         'Soft Rock': new Audio('ES_Psalm 91 - JOYSPRING - 35000-50000.wav'),
+        'Electronic Rock': new Audio('ES_Data Rawk - Def Lev - 22000-37000.wav'),
+        'Electropop': new Audio('ES_Shake You Off - Paisley Pink - 18000-33000.wav'),
+        'Acid Jazz': new Audio('ES_Loose the Goose - Lucas Pittman - 16000-31000.wav'),
+        'Funk': new Audio('ES_Cant Handle It - Ryan James Carr - 18000-33000.wav'),
+        'Grunge': new Audio('ES_School of Life - Rockin For Decades - 14000-29000.wav'),
+        'Alternative Rock': new Audio('ES_Sun Ray Beach - Dew Of Light - 8000-23000.wav'),
+        'Americana': new Audio('ES_Backyard Folklore - Northside - 15000-30000.wav'),
+        'Dub': new Audio('ES_Eardrum - Push N Glide - 26000-41000.wav'),
+        'Country Blues': new Audio('ES_Backroad Blues - Roots and Recognition - 15000-30000.wav'),
+        'Pop Punk': new Audio('ES_Me Myself and I - Sven Karlsson - 17000-32000.wav'),
+        'Contemporary R&B': new Audio('ES_The End of You and Me - spring gang - 12000-27000.wav'),
+        'Swing': new Audio('ES_Straight 56 - Roy Edwin Williams - 9000-24000.wav'),
+        'Swing': new Audio('ES_Straight 56 - Roy Edwin Williams - 9000-24000.wav'),
+        'Swing': new Audio('ES_Straight 56 - Roy Edwin Williams - 9000-24000.wav'),
+        'Swing': new Audio('ES_Straight 56 - Roy Edwin Williams - 9000-24000.wav'),
+        'Swing': new Audio('ES_Straight 56 - Roy Edwin Williams - 9000-24000.wav'),
+        'Swing': new Audio('ES_Straight 56 - Roy Edwin Williams - 9000-24000.wav'),
+        'Swing': new Audio('ES_Straight 56 - Roy Edwin Williams - 9000-24000.wav'),
         // Add more result genres and their corresponding audio files here
     };
 
@@ -297,6 +315,9 @@ document.addEventListener('DOMContentLoaded', () => {
             audioMap[genre].volume = volumeControl.value;
             audioMap[genre].play().catch(e => console.error('Error playing audio:', e));
             currentPlayingGenre = genre;
+        } else if (genreCombinations[genre] && resultAudioMap[genreCombinations[genre]]) {
+            // If it's a result genre, play its audio
+            playAudio(genreCombinations[genre], true);
         } else {
             console.error(`No audio found for genre: ${genre}`);
         }
@@ -355,10 +376,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const genre = e.dataTransfer.getData('text/plain');
         if (!droppedGenres.includes(genre)) {
             if (currentPlayingGenre) {
-                stopAudio(currentPlayingGenre);
+                stopAudio(currentPlayingGenre, currentPlayingGenre in resultAudioMap);
             }
             droppedGenres.push(genre);
-            playAudio(genre);
+            playAudio(genre, genre in resultAudioMap);
             updateDropZone();
         }
     }
@@ -403,10 +424,11 @@ document.addEventListener('DOMContentLoaded', () => {
         dropZone.innerHTML = '';
         
         if (currentPlayingGenre) {
-            stopAudio(currentPlayingGenre);
+            stopAudio(currentPlayingGenre, currentPlayingGenre in resultAudioMap);
             currentPlayingGenre = null;
         }
     }
+   
     
     function updateDropZone() {
         dropZone.innerHTML = '';
@@ -464,7 +486,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    clearButton.addEventListener('click', clearDropZone);
+    clearButton.addEventListener('click', function() {
+        clearDropZone();
+        stopAllAudio();
+    });
     resetButton.addEventListener('click', function() {
         clearDropZone();
         genreList.innerHTML = '';
@@ -536,3 +561,74 @@ loadAudio('ES_A Heartless World - Mindme - 9000-24000.wav')
     .catch(error => {
         console.error('Failed to load audio:', error);
     });
+
+    function stopAllAudio() {
+        for (let genre in genreAudioMap) {
+            stopAudio(genre);
+        }
+        for (let genre in resultAudioMap) {
+            stopAudio(genre, true);
+        }
+        currentPlayingGenre = null;
+    }
+
+    // הוסף את זה לתחילת הקובץ script.js
+function isTouchDevice() {
+    return 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
+}
+
+if (isTouchDevice()) {
+    genres.forEach(genre => {
+        genre.addEventListener('touchstart', dragStart, {passive: false});
+        genre.addEventListener('touchmove', drag, {passive: false});
+        genre.addEventListener('touchend', drop);
+    });
+
+    dropZone.addEventListener('touchmove', dragOver, {passive: false});
+    dropZone.addEventListener('touchend', drop);
+}
+
+function dragStart(e) {
+    if (e.type === 'touchstart') {
+        e.preventDefault();
+        this.classList.add('dragging');
+    } else {
+        e.dataTransfer.setData('text/plain', e.target.textContent);
+    }
+}
+
+function drag(e) {
+    if (e.type === 'touchmove') {
+        e.preventDefault();
+        const touch = e.targetTouches[0];
+        this.style.position = 'absolute';
+        this.style.left = touch.pageX - 25 + 'px';
+        this.style.top = touch.pageY - 25 + 'px';
+    }
+}
+
+function dragOver(e) {
+    e.preventDefault();
+    this.classList.add('dragover');
+}
+
+function drop(e) {
+    e.preventDefault();
+    this.classList.remove('dragover');
+    
+    if (e.type === 'touchend') {
+        const genre = document.querySelector('.dragging');
+        if (genre && !droppedGenres.includes(genre.textContent)) {
+            droppedGenres.push(genre.textContent);
+            updateDropZone();
+        }
+        genre.classList.remove('dragging');
+        genre.style.position = 'static';
+    } else {
+        const genre = e.dataTransfer.getData('text/plain');
+        if (!droppedGenres.includes(genre)) {
+            droppedGenres.push(genre);
+            updateDropZone();
+        }
+    }
+}
