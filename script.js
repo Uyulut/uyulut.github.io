@@ -39,6 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'Soul + Rock n Roll': 'Soul Rock',
         'Soul Rock + Electronic': 'Electronic Soul Rock',
         'Funk + Hip Hop': 'Electro Music',
+        'Electronic + Swing': 'Electro Swing',
         'Electro Music + House': 'Electro House',
         'Electronic + Funk': 'Electro Music',
         'Electronic + Country': 'Electro Country',
@@ -318,6 +319,8 @@ document.addEventListener('DOMContentLoaded', () => {
         'Ska': new Audio('ES_Cant Beat Em Join Em - Carlton Lees - 8000-23000.wav'),
         'Afrobeat': new Audio('ES_Mereto - HATAMITSUNAMI - 14000-29000.wav'),
         'Indie Pop': new Audio('ES_Some Kind of Friend - Vicki Vox - 35000-50000.wav'),
+        'House': new Audio('ES_Sunlit - Gregory David - 18000-33000.wav'),
+        'Techno': new Audio('ES_Nattkatt - Chibi Power - 90000-105000.wav'),
 
 
 
