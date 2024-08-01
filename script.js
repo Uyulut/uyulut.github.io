@@ -330,6 +330,8 @@ document.addEventListener('DOMContentLoaded', () => {
         'Lo-Fi Hip Hop': new Audio('ES_With the Homies - Sarah, the Illstrumentalist - 15000-30000.wav'),
         'Alternative Hip Hop': new Audio('ES_Good Company (Clean Version) - Nyck Caution - 18000-33000.wav'),
         'Electro House': new Audio('EES_If You Say So - Ava Low - 22000-37000.wav'),
+        'Hard Rock': new Audio('ES_Falling Down (Clean Version) - Def Lev - 20000-35000.wav'),
+        'Indie Rock': new Audio('ES_The End, Again - Par Hagstrom - 8000-23000.wav'),
 
 
 
