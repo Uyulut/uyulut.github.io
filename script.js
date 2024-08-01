@@ -321,6 +321,8 @@ document.addEventListener('DOMContentLoaded', () => {
         'Indie Pop': new Audio('ES_Some Kind of Friend - Vicki Vox - 35000-50000.wav'),
         'House': new Audio('ES_Sunlit - Gregory David - 18000-33000.wav'),
         'Techno': new Audio('ES_Nattkatt - Chibi Power - 90000-105000.wav'),
+        'Electro Swing': new Audio('ES_Big Shot - Jules Gaia - 17000-32000.wav'),
+
 
 
 
