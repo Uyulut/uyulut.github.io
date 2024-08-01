@@ -329,6 +329,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'Lo-Fi House': new Audio('ES_Browser Update - Midnight Cycler - 19000-34000.wav'),
         'Lo-Fi Hip Hop': new Audio('ES_With the Homies - Sarah, the Illstrumentalist - 15000-30000.wav'),
         'Alternative Hip Hop': new Audio('ES_Good Company (Clean Version) - Nyck Caution - 18000-33000.wav'),
+        'Electro House': new Audio('EES_If You Say So - Ava Low - 22000-37000.wav'),
 
 
 
