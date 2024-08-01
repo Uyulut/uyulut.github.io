@@ -69,6 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'Progressive + Rock n Roll': 'Progressive Rock',
         'Pop + Indie': 'Indie Pop',
         'Indie + Alternative Rock': 'Indie Rock',
+        'Alternativ Rock + Hip Hop': 'Alternative Hip Hop',
         'Indie + Rock n Roll': 'Indie Rock',
         'Indie Rock + Pop': 'Indie Pop',
         'Disco + Classical': 'Symphonic Disco',
@@ -137,6 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'Psychedelic Music + Pop': 'Hypnagogic Pop',
         'Ambient + Chill Out': 'Lo-Fi',
         'Lo-Fi + House': 'Lo-Fi House',
+        'Lo-Fi + Hip Hop': 'Lo-fi Hip Hop',
         'Easy Listening + Jazz': 'Chill Out',
         'Psychedelic Music + Jazz': 'Acid Jazz',
         'Heavy Metal + Alternative Rock': 'Alternative Metal',
@@ -325,6 +327,9 @@ document.addEventListener('DOMContentLoaded', () => {
         'Electro Swing': new Audio('ES_Big Shot - Jules Gaia - 17000-32000.wav'),
         'Trance': new Audio('EES_Land of the Lost - Heyson - 26000-41000.wav'),
         'Lo-Fi House': new Audio('ES_Browser Update - Midnight Cycler - 19000-34000.wav'),
+        'Lo-Fi Hip Hop': new Audio('ES_With the Homies - Sarah, the Illstrumentalist - 15000-30000.wav'),
+        'Alternative Hip Hop': new Audio('ES_Good Company (Clean Version) - Nyck Caution - 18000-33000.wav'),
+
 
 
 
