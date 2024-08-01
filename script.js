@@ -68,6 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'Progressive + Rock n Roll': 'Progressive Rock',
         'Pop + Indie': 'Indie Pop',
         'Indie + Alternative Rock': 'Indie Rock',
+        'Indie + Rock n Roll': 'Indie Rock',
         'Indie Rock + Pop': 'Indie Pop',
         'Disco + Classical': 'Symphonic Disco',
         'Indie Pop + Pop': 'Twee Pop',
