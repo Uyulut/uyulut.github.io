@@ -136,6 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'Psychedelic Music + Rock n Roll': 'Acid Rock',
         'Psychedelic Music + Pop': 'Hypnagogic Pop',
         'Ambient + Chill Out': 'Lo-Fi',
+        'Lo-Fi + House': 'Lo-Fi House',
         'Easy Listening + Jazz': 'Chill Out',
         'Psychedelic Music + Jazz': 'Acid Jazz',
         'Heavy Metal + Alternative Rock': 'Alternative Metal',
@@ -323,6 +324,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'Techno': new Audio('ES_Nattkatt - Chibi Power - 90000-105000.wav'),
         'Electro Swing': new Audio('ES_Big Shot - Jules Gaia - 17000-32000.wav'),
         'Trance': new Audio('EES_Land of the Lost - Heyson - 26000-41000.wav'),
+        'Lo-Fi House': new Audio('ES_Browser Update - Midnight Cycler - 19000-34000.wav'),
 
 
 
