@@ -6,7 +6,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const resetButton = document.getElementById('reset-button');
     const clearButton = document.getElementById('clear-button');
     const mixButton = document.getElementById('mix-button');
+    const songName = document.getElementById('song-name'); 
     const volumeControl = document.getElementById('volume');
+    mixButton.addEventListener('click', mixGenres);
+    clearButton.addEventListener('click', clearDropZone);
 
     let droppedGenres = [];
     let currentPlayingGenre = null;
@@ -28,6 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'Classical + Blues': 'Ragtime',
         'Pop + Heavy Metal': 'Pop Metal',
         'Soul + R&B': 'Funk',
+        'Ambient + Pop' : 'Ambient Pop',
         'Funk + Rock n Roll': 'Funk Rock',
         'Funk + Jazz': 'Jazz Funk',
         'Punk Blues + Heavy Metal': 'Biker Metal',
@@ -295,56 +299,117 @@ document.addEventListener('DOMContentLoaded', () => {
         'Country Blues': new Audio('ES_Backroad Blues - Roots and Recognition - 15000-30000.wav'),
         'Pop Punk': new Audio('ES_Me Myself and I - Sven Karlsson - 17000-32000.wav'),
         'Contemporary R&B': new Audio('ES_The End of You and Me - spring gang - 12000-27000.wav'),
+        'Ambient': new Audio('ES_Beginners Mind - Harbours & Oceans - 17000-32000.wav'),
+        'New Age': new Audio('ES_Tangeh - DEX 1200 - 18000-33000.wav'),
+        'Ragtime': new Audio('ES_Lost in Town - The Fly Guy Five - 9000-24000.wav'),
+        'Folk Pop': new Audio('ES_Second Guessing - Victor Lundberg - 30000-45000.wav'),
+        'Chill Out': new Audio('ES_O12 - HATAMITSUNAMI - 38000-53000.wav'),
+        'Soul': new Audio('ES_Just Be Mine - John Runefelt - 19000-34000.wav'),
+        'Disco': new Audio('ES_WHAT! - Basixx - 26000-41000.wav'),
         'Swing': new Audio('ES_Straight 56 - Roy Edwin Williams - 9000-24000.wav'),
-        'Swing': new Audio('ES_Straight 56 - Roy Edwin Williams - 9000-24000.wav'),
-        'Swing': new Audio('ES_Straight 56 - Roy Edwin Williams - 9000-24000.wav'),
-        'Swing': new Audio('ES_Straight 56 - Roy Edwin Williams - 9000-24000.wav'),
-        'Swing': new Audio('ES_Straight 56 - Roy Edwin Williams - 9000-24000.wav'),
-        'Swing': new Audio('ES_Straight 56 - Roy Edwin Williams - 9000-24000.wav'),
-        'Swing': new Audio('ES_Straight 56 - Roy Edwin Williams - 9000-24000.wav'),
-        // Add more result genres and their corresponding audio files here
-    };
+        'Fusion Jazz': new Audio('ES_Gratitude Loop - HATAMITSUNAMI - 21000-36000.wav'),
+        'Nu Metal': new Audio('ES_Groove Commander - Dillon Knighton - 36658-146631.wav'),
+        'Dance Pop': new Audio('ES_Hide and Seek (Instrumental Version) - Hallman - 42000-57000.wav'),
+        'Punk Rock': new Audio('ES_So Bad - Divorce Applause - 10000-25000.wav'),
+        'Ambient Pop': new Audio('ES_Safari - Paisley Pink - 35000-50000.wav'),
+        'Garage': new Audio('ES_Glitter Gutter - Conditional - 10000-25000.wav'),
+        'Calypso': new Audio('ES_Jawbone Jam - Tiki Tiki - 14000-29000.wav'),
+        'Ska': new Audio('ES_Cant Beat Em Join Em - Carlton Lees - 8000-23000.wav'),
+        'Afrobeat': new Audio('ES_Mereto - HATAMITSUNAMI - 14000-29000.wav'),
+        'Indie Pop': new Audio('ES_Some Kind of Friend - Vicki Vox - 35000-50000.wav'),
 
+
+
+    };
     function playAudio(genre, isResult = false) {
+        if (!genre) {
+            console.error('No genre provided');
+            return;
+        }
+        
         let audioMap = isResult ? resultAudioMap : genreAudioMap;
         console.log('Playing audio for:', genre, 'isResult:', isResult);
+        
+        if (!audioMap[genre] && genreCombinations[genre]) {
+            genre = genreCombinations[genre];
+            isResult = true;
+            audioMap = resultAudioMap;
+        }
+    
         if (audioMap[genre]) {
             if (currentPlayingGenre) {
                 stopAudio(currentPlayingGenre, currentPlayingGenre in resultAudioMap);
             }
             audioMap[genre].volume = volumeControl.value;
-            audioMap[genre].play().catch(e => console.error('Error playing audio:', e));
+            try {
+                audioMap[genre].play();
+            } catch (e) {
+                console.error('Error playing audio:', e);
+            }
             currentPlayingGenre = genre;
-        } else if (genreCombinations[genre] && resultAudioMap[genreCombinations[genre]]) {
-            // If it's a result genre, play its audio
-            playAudio(genreCombinations[genre], true);
+            
+            let fileName = audioMap[genre].src.split('/').pop();
+            updateSongName(fileName);
         } else {
             console.error(`No audio found for genre: ${genre}`);
-        }
-    }
-
-    function stopAudio(genre, isResult = false) {
-        let audioMap = isResult ? resultAudioMap : genreAudioMap;
-        if (genre && audioMap[genre]) {
-            audioMap[genre].pause();
-            audioMap[genre].currentTime = 0;
-            if (genre === currentPlayingGenre) {
-                currentPlayingGenre = null;
-            }
-        }
-    }
-
-    function playResultAudio(fusionResult) {
-        console.log('Attempting to play result audio for:', fusionResult);
-        if (fusionResult in resultAudioMap) {
-            console.log('Audio found for result genre, playing...');
-            playAudio(fusionResult, true);
-        } else {
-            console.log(`No specific audio for ${fusionResult}, playing a default audio...`);
-            // You can add logic here to play a default audio for unknown fusion results
+            updateSongName("No song playing");
         }
     }
     
+    function stopAudio(genre, isResult = false) {
+        if (!genre) {
+            return;
+        }
+        
+        let audioMap = isResult ? resultAudioMap : genreAudioMap;
+        if (audioMap[genre]) {
+            try {
+                audioMap[genre].pause();
+                audioMap[genre].currentTime = 0;
+            } catch (e) {
+                console.error('Error stopping audio:', e);
+            }
+            if (genre === currentPlayingGenre) {
+                currentPlayingGenre = null;
+                updateSongName("No song playing");
+            }
+        }
+    }
+    
+    function updateSongName(songName) {
+        const songNameElement = document.getElementById('song-name');
+        const nowPlayingElement = document.getElementById('now-playing');
+        
+        if (songNameElement && nowPlayingElement) {
+            if (songName && songName !== "No song playing") {
+                songName = songName.replace(/%/g, ' '); // Replace % with space
+                songName = songName.replace(/20/g, ' '); // Replace % with space
+                songNameElement.textContent = shortenFileName(songName);
+                songNameElement.setAttribute('data-full-name', songName);
+                nowPlayingElement.textContent = "Now Playing:";
+            } else {
+                songNameElement.textContent = "No song playing";
+                songNameElement.removeAttribute('data-full-name');
+                nowPlayingElement.textContent = "";
+            }
+        } else {
+            console.error('Song name or Now Playing element not found');
+        }
+    }
+    
+    function shortenFileName(fileName, maxLength = 100) {
+        if (!fileName) {
+            return '';
+        }
+        const startIndex = fileName.indexOf('ES_') + 3; 
+        const songName = fileName.slice(startIndex);
+        
+        // Remove numbers and file type from the song name
+        const cleanedName = songName.replace(/\d+/g, '').replace(/\.[^\.]+$/g, '');
+        
+        if (cleanedName.length <= maxLength) return cleanedName;
+        return cleanedName.substr(0, maxLength - 3) + '...';
+    }
     genres.forEach(genre => {
         genre.addEventListener('dragstart', dragStart);
     });
@@ -373,23 +438,56 @@ document.addEventListener('DOMContentLoaded', () => {
     function drop(e) {
         e.preventDefault();
         this.classList.remove('dragover');
-        const genre = e.dataTransfer.getData('text/plain');
-        if (!droppedGenres.includes(genre)) {
-            if (currentPlayingGenre) {
-                stopAudio(currentPlayingGenre, currentPlayingGenre in resultAudioMap);
-            }
-            droppedGenres.push(genre);
-            playAudio(genre, genre in resultAudioMap);
-            updateDropZone();
+        let genre;
+        if (e.type === 'touchend') {
+          const draggedElement = document.querySelector('.dragging');
+          if (draggedElement) {
+            genre = draggedElement.textContent;
+            draggedElement.classList.remove('dragging');
+            draggedElement.style.position = 'static';
+          }
+        } else {
+          genre = e.dataTransfer.getData('text/plain');
         }
+      
+        if (genre) {
+          if (droppedGenres.includes(genre)) {
+            // Genre is already in the droppedGenres array, remove it
+            const index = droppedGenres.indexOf(genre);
+            if (index > -1) {
+              droppedGenres.splice(index, 1);
+            }
+            updateDropZone();
+            if (currentPlayingGenre === genre) {
+              stopAudio(currentPlayingGenre, currentPlayingGenre in resultAudioMap);
+              currentPlayingGenre = null;
+            }
+          } else {
+            // Genre is not in the droppedGenres array, add it
+            droppedGenres.push(genre);
+            updateDropZone();
+            if (currentPlayingGenre) {
+              stopAudio(currentPlayingGenre, currentPlayingGenre in resultAudioMap);
+            }
+            playAudio(genre, genre in resultAudioMap);
+            currentPlayingGenre = genre;
+          }
+        }
+      }
+      mixButton.addEventListener('click', function() {
+        mixGenres();
+        clearDropZone();
+    });
+
+
+    function playResultAudio(genre) {
+        // Implementation of playResultAudio function
     }
-
-    mixButton.addEventListener('click', mixGenres);
-
+    
     function mixGenres() {
+        console.log('Mixing genres...');
         if (droppedGenres.length < 2) {
-            alert('Please drop at least two genres to mix.');
-            return;
+            return; // Return early if there are fewer than two dropped genres
         }
     
         const sortedGenres = droppedGenres.sort().join(' + ');
@@ -416,6 +514,7 @@ document.addEventListener('DOMContentLoaded', () => {
             result.textContent = `${sortedGenres} = Unknown Fusion`;
         }
     
+        // Clear the drop zone and reset droppedGenres
         clearDropZone();
     }
     
@@ -427,8 +526,10 @@ document.addEventListener('DOMContentLoaded', () => {
             stopAudio(currentPlayingGenre, currentPlayingGenre in resultAudioMap);
             currentPlayingGenre = null;
         }
+    
+        // Ensure the drop zone is visually empty
+        updateDropZone();
     }
-   
     
     function updateDropZone() {
         dropZone.innerHTML = '';
@@ -439,7 +540,9 @@ document.addEventListener('DOMContentLoaded', () => {
             dropZone.appendChild(genreElement);
         });
     }
-
+    
+    // Update the drop function to ensure it's correctly handling the dropped genres
+   
     function findComplexCombination(genres) {
         let combinations = generateCombinations(genres);
         for (let combination of combinations) {
