@@ -333,6 +333,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'Hard Rock': new Audio('ES_Falling Down (Clean Version) - Def Lev - 20000-35000.wav'),
         'Indie Rock': new Audio('ES_The End, Again - Par Hagstrom - 8000-23000.wav'),
         'Hyperpop': new Audio('ES_Peanuts - Rocket Jr - 25000-40000.wav'),
+        'Funk Rock': new Audio('ES_Make It Yellow - Andreas Dahlback - 12000-27000.wav'),
 
 
 
