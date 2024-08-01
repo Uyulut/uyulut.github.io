@@ -322,6 +322,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'House': new Audio('ES_Sunlit - Gregory David - 18000-33000.wav'),
         'Techno': new Audio('ES_Nattkatt - Chibi Power - 90000-105000.wav'),
         'Electro Swing': new Audio('ES_Big Shot - Jules Gaia - 17000-32000.wav'),
+        'Trance': new Audio('EES_Land of the Lost - Heyson - 26000-41000.wav'),
 
 
 
