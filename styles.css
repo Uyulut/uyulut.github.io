@@ -544,9 +544,8 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 697px;
-    position: absolute;
-    padding: 10px 0; 
+    padding: 10px 0;
+    flex-shrink: 0;
 }
 
 #footer-text {
