@@ -86,7 +86,6 @@
             
            
             <div id="genres">
-                <!-- Your genre items will be dynamically added here -->
                 <div class="genre" draggable="true">Pop</div>
                 <div class="genre" draggable="true">Rock n Roll</div>
                 <div class="genre" draggable="true">Hip Hop</div>
@@ -101,7 +100,6 @@
                 <div class="genre" draggable="true">Proto Punk</div>
                 <div class="genre" draggable="true">Progressive</div>
                 <div class="genre" draggable="true">Easy Listening</div>
-                <!-- Add more genres as needed -->
             </div>
             
         </div>
@@ -117,7 +115,6 @@
 
     <script src="script.js"></script>
     <script>
-        // Function to filter genres based on input
         function filterGenres() {
             var input, filter, genres, genre;
             input = document.getElementById('search-bar');
@@ -134,17 +131,16 @@
             });
         }
 
-        // Function to clear search and show all genres
         function clearSearch() {
             var input = document.getElementById('search-bar');
             input.value = '';
-            filterGenres(); // Call filter function to show all genres
+            filterGenres(); 
         }
 
-        // Event listener for input changes in search bar
+        
         document.getElementById('search-bar').addEventListener('input', filterGenres);
 
-        // Event listener for clear button
+        
         document.getElementById('clear-search').addEventListener('click', clearSearch);
     </script>
        <script>
