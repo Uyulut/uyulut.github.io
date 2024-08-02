@@ -53,6 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'Ambient + Electronic': 'New Age',
         'Ambient + New Age': 'Space Music',
         'Ambient + Easy Listening': 'Space Music',
+        'Soul + Hip Hop': 'Hip Hop Soul',
         'Ambient + Progressive Rock': 'Post Progressive',
         'House + Electro Music': 'Techno',
         'House + Electronic': 'Techno',
@@ -334,6 +335,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'Indie Rock': new Audio('ES_The End, Again - Par Hagstrom - 8000-23000.wav'),
         'Hyperpop': new Audio('ES_Peanuts - Rocket Jr - 25000-40000.wav'),
         'Funk Rock': new Audio('ES_Make It Yellow - Andreas Dahlback - 12000-27000.wav'),
+        'Hip Hop Soul': new Audio('ES_Seafoam - Ryan James Carr - 20000-35000.wav'),
 
 
 
