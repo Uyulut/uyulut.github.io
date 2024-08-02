@@ -12,6 +12,14 @@ body {
     overflow-x: hidden;
 }
 
+h1 {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color:rgba(255, 64, 129, 0.7);
+    text-align: center;
+}
+
 /* Header styles */
 header {
     position: fixed;
