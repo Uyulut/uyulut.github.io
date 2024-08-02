@@ -404,8 +404,8 @@ document.addEventListener('DOMContentLoaded', () => {
         
         if (songNameElement && nowPlayingElement) {
             if (songName && songName !== "No song playing") {
-                songName = songName.replace(/%/g, ' '); // Replace % with space
-                songName = songName.replace(/20/g, ' '); // Replace % with space
+                songName = songName.replace(/%/g, ' '); 
+                songName = songName.replace(/20/g, ' '); 
                 songNameElement.textContent = shortenFileName(songName);
                 songNameElement.setAttribute('data-full-name', songName);
                 nowPlayingElement.textContent = "Now Playing:";
@@ -426,7 +426,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const startIndex = fileName.indexOf('ES_') + 3; 
         const songName = fileName.slice(startIndex);
         
-        // Remove numbers and file type from the song name
         const cleanedName = songName.replace(/\d+/g, '').replace(/\.[^\.]+$/g, '');
         
         if (cleanedName.length <= maxLength) return cleanedName;
@@ -474,7 +473,6 @@ document.addEventListener('DOMContentLoaded', () => {
       
         if (genre) {
           if (droppedGenres.includes(genre)) {
-            // Genre is already in the droppedGenres array, remove it
             const index = droppedGenres.indexOf(genre);
             if (index > -1) {
               droppedGenres.splice(index, 1);
@@ -485,7 +483,6 @@ document.addEventListener('DOMContentLoaded', () => {
               currentPlayingGenre = null;
             }
           } else {
-            // Genre is not in the droppedGenres array, add it
             droppedGenres.push(genre);
             updateDropZone();
             if (currentPlayingGenre) {
@@ -503,13 +500,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     function playResultAudio(genre) {
-        // Implementation of playResultAudio function
     }
     
     function mixGenres() {
         console.log('Mixing genres...');
         if (droppedGenres.length < 2) {
-            return; // Return early if there are fewer than two dropped genres
+            return; 
         }
     
         const sortedGenres = droppedGenres.sort().join(' + ');
@@ -536,7 +532,6 @@ document.addEventListener('DOMContentLoaded', () => {
             result.textContent = `${sortedGenres} = Unknown Fusion`;
         }
     
-        // Clear the drop zone and reset droppedGenres
         clearDropZone();
     }
     
@@ -549,7 +544,6 @@ document.addEventListener('DOMContentLoaded', () => {
             currentPlayingGenre = null;
         }
     
-        // Ensure the drop zone is visually empty
         updateDropZone();
     }
     
@@ -563,7 +557,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    // Update the drop function to ensure it's correctly handling the dropped genres
    
     function findComplexCombination(genres) {
         let combinations = generateCombinations(genres);
@@ -678,7 +671,6 @@ function loadAudio(url) {
     });
 }
 
-// שימוש:
 loadAudio('ES_A Heartless World - Mindme - 9000-24000.wav')
     .then(audio => {
         resultAudioMap['Pop Rock'] = audio;
@@ -697,7 +689,6 @@ loadAudio('ES_A Heartless World - Mindme - 9000-24000.wav')
         currentPlayingGenre = null;
     }
 
-    // הוסף את זה לתחילת הקובץ script.js
 function isTouchDevice() {
     return 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
 }
