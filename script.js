@@ -337,6 +337,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'Funk Rock': new Audio('ES_Make It Yellow - Andreas Dahlback - 12000-27000.wav'),
         'Hip Hop Soul': new Audio('ES_Seafoam - Ryan James Carr - 20000-35000.wav'),
         'Jazz Funk': new Audio('ES_Duck Oil - baegel - 9000-24000.wav'),
+        'Reggaeton': new Audio('ES_Quiere Que Le De - Ratcheton - 9000-24000.wav'),
 
 
 
