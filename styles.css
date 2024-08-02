@@ -710,6 +710,7 @@ footer {
 #clear-search {
     padding: 10px;
     margin-left: 10px;
+    font-family: 'Assistant', sans-serif;
     background-color: #ff4081;
     color: white;
     border: none;
@@ -885,6 +886,7 @@ lottie-player::part(toolbar) {
         margin-top: 5px;
         margin-bottom: -30px;
         margin-left: -55px;
+        font-family: 'Assistant', sans-serif;
 
     }
 
