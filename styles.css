@@ -576,6 +576,11 @@ footer {
     box-sizing: border-box;
 }
 
+.custom-link {
+    color: #ff4081;
+    text-decoration: none;
+  }
+
 .genre-info {
     background-color: rgba(0, 0, 0, 0.5);
     color: white;
