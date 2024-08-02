@@ -338,6 +338,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'Hip Hop Soul': new Audio('ES_Seafoam - Ryan James Carr - 20000-35000.wav'),
         'Jazz Funk': new Audio('ES_Duck Oil - baegel - 9000-24000.wav'),
         'Reggaeton': new Audio('ES_Quiere Que Le De - Ratcheton - 9000-24000.wav'),
+        'Screamo': new Audio('ES_Find My Way - Def Lev - 28000-43000.wav'),
 
 
 
