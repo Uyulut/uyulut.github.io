@@ -4,6 +4,7 @@ body {
     background-image: url(Background.png);
     color: #fff;
     margin: 0;
+    position: relative;
     padding: 0;
     min-height: 100vh;
     display: flex;
@@ -533,7 +534,97 @@ main {
     transition: width 2s, height 2s;
 }
 
-.center:hover {
+.logo {
+    display: inline-block;
+    margin-right: 20px;
+    width: 10%;
+    transition: width 2s, height 2s;
+    vertical-align: middle;
+}
+
+.logo:hover {
+    width: 11%;
+    height: 11%
+}
+
+.logo-and-beats-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: -120px;
+    padding-right: 30px;
+}
+
+.sound-beats {
+    display: flex;
+    align-items: flex-end;
+    height: 100px;
+    width: 200px;
+    padding: 10px;
+}
+
+.beat, .beatother {
+    width: 10px;
+    margin: 0 5px;
+    border-radius: 5px;
+    animation: beat-animation 0.7s ease-in-out infinite; 
+}
+
+.beat {
+    background: linear-gradient(0deg, #ff4081, #3f51b5);
+}
+
+.beatother {
+    background: linear-gradient(0deg, #ff4081, #3f51b5);
+}
+
+.beat:nth-child(1), .beatother:nth-child(1) { animation-delay: 0s; }
+.beat:nth-child(2), .beatother:nth-child(2) { animation-delay: 0.07s; }
+.beat:nth-child(3), .beatother:nth-child(3) { animation-delay: 0.14s; }
+.beat:nth-child(4), .beatother:nth-child(4) { animation-delay: 0.21s; }
+.beat:nth-child(5), .beatother:nth-child(5) { animation-delay: 0.28s; }
+
+@keyframes beat-animation {
+    0%, 100% { height: 100px; }
+    50% { height: 45px; }
+}
+
+@media (max-width: 768px) {
+    .logo-and-beats-container {
+        justify-content: center;
+        margin-bottom: 20px;
+        padding-right: 0;
+    }
+
+    .logo {
+        display: inline-block;
+        width: 15%;
+        margin-right: 10px;
+    }
+
+    .sound-beats {
+        width: 150px;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo-and-beats-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .logo {
+        width: 20%;
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .sound-beats {
+        width: 100px;
+    }
+}
+
+.logohover {
     width: 11%;
     height: 11%
 }
@@ -542,11 +633,12 @@ footer {
     background-color: #ff4081;
     width: 100%;
     display: flex;
+    position: absolute;
     justify-content: center;
     align-items: center;
-    margin-top: 697px;
-    position: absolute;
-    padding: 10px 0; 
+    padding: 0;
+    bottom: 0;
+    flex-shrink: 0;
 }
 
 #footer-text {
@@ -738,41 +830,6 @@ footer {
 
 
 
-.sound-beats {
-    display: flex;
-    align-items: flex-end;
-    height: 100px;
-    width: 200px;
-    margin-top: -50px;
-    margin-left: 1140px;
-    padding: 10px;
-}
-
-.beat, .beatother {
-    width: 10px;
-    margin: 0 5px;
-    border-radius: 5px;
-    animation: beat-animation 0.7s ease-in-out infinite; 
-}
-
-.beat {
-    background: linear-gradient(0deg,  #ff4081, #3f51b5);
-}
-
-.beatother {
-    background:linear-gradient(0deg,  #ff4081, #3f51b5);
-}
-
-.beat:nth-child(1), .beatother:nth-child(1) { animation-delay: 0s; }
-.beat:nth-child(2), .beatother:nth-child(2) { animation-delay: 0.07s; } 
-.beat:nth-child(3), .beatother:nth-child(3) { animation-delay: 0.14s; }
-.beat:nth-child(4), .beatother:nth-child(4) { animation-delay: 0.21s; }
-.beat:nth-child(5), .beatother:nth-child(5) { animation-delay: 0.28s; }
-
-@keyframes beat-animation {
-    0%, 100% { height: 100px; } 
-    50% { height: 45px; } 
-}
 lottie-player::part(toolbar) {
     display: none !important;
   }
@@ -918,7 +975,7 @@ lottie-player::part(toolbar) {
 
     footer {
         margin-top: 140px;
-        position: relative;
+        position: absolute;
         bottom: 0;
         width: 100%;
         text-align: center;
@@ -1059,7 +1116,7 @@ lottie-player::part(toolbar) {
 
     footer {
         margin-top: 140px;
-        position: relative;
+        position: absolute;
         bottom: 0;
         width: 100%;
         text-align: center;
